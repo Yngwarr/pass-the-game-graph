@@ -9,9 +9,7 @@
   (http/get url {:throw-exceptions false}))
 
 (def jam-links
-  [
-   ;; day 4
-   "https://itch.io/jam/380910/entries.json"])
+  [{:day 4 :url "https://itch.io/jam/380910/entries.json"}])
 
 (defn game-page [url]
   (let [crawl-result (crawl url)]
@@ -28,14 +26,15 @@
         (flatten (mapv #(s/select (s/tag :a) %)
                        (s/select (s/child (s/class "formatted_description")) page)))))
 
-(defn entry->game [{:keys [game] :as entry}]
+(defn entry->game [{:keys [game] :as entry} day]
   (assoc (select-keys game [:title :url])
+         :day day
          :user (get-in game [:user :name])
          :entry-url (str "https://itch.io" (:url entry))
          :links (game-links (game-page (:url game)))))
 
-(defn jam-submissions [link]
-  (mapv entry->game
+(defn jam-submissions [link day]
+  (mapv #(entry->game % day)
         (-> (crawl link)
             :body
             (json/parse-string true)
@@ -44,5 +43,5 @@
 (comment
   (crawl "https://blowupthenoobs.itch.io/wouldyouratherday3")
   (game-links (game-page "https://yngvarr.itch.io/pass-the-game-day-3"))
-  (def the-subs (jam-submissions (first jam-links)))
+  (def the-subs (jam-submissions (first jam-links) 4))
   )
