@@ -9,7 +9,12 @@
   (http/get url {:throw-exceptions false}))
 
 (def jam-links
-  [{:day 4 :url "https://itch.io/jam/380910/entries.json"}])
+  [
+   {:day 4 :url "https://itch.io/jam/380910/entries.json"}
+   {:day 3 :url "https://itch.io/jam/380909/entries.json"}
+   ;; {:day 2 :url "https://itch.io/jam/380908/entries.json"}
+   ;; {:day 1 :url "https://itch.io/jam/380876/entries.json"}
+   ])
 
 (defn game-page [url]
   (let [crawl-result (crawl url)]
@@ -33,15 +38,29 @@
          :entry-url (str "https://itch.io" (:url entry))
          :links (game-links (game-page (:url game)))))
 
+;; TODO make one big :nodes and one big :index for all 6 jams
 (defn jam-submissions [link day]
-  (mapv #(entry->game % day)
-        (-> (crawl link)
-            :body
-            (json/parse-string true)
-            :jam_games)))
+  (let [res
+        (reduce (fn [acc value]
+                  (let [game (entry->game value day)]
+                    {:nodes (conj! (:nodes acc) game)
+                     :index (assoc! (:index acc) (:url game) (:entry-url game))}))
+                {:nodes (transient [])
+                 :index (transient {})}
+                (-> (crawl link)
+                    :body
+                    (json/parse-string true)
+                    :jam_games))]
+    [(persistent! (:nodes res)) (persistent! (:index res))]))
+
+(defn crawl-data []
+  #_"download all entries, while building the index"
+  #_"build links, using entry-urls as keys")
 
 (comment
   (crawl "https://blowupthenoobs.itch.io/wouldyouratherday3")
   (game-links (game-page "https://yngvarr.itch.io/pass-the-game-day-3"))
-  (def the-subs (jam-submissions (first jam-links) 4))
+  (def the-subs
+    (let [jam (first jam-links)]
+      (jam-submissions (:url jam) (:day jam))))
   )
