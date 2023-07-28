@@ -11,7 +11,7 @@
 (def jam-links
   [
    {:day 4 :url "https://itch.io/jam/380910/entries.json"}
-   {:day 3 :url "https://itch.io/jam/380909/entries.json"}
+   ;; {:day 3 :url "https://itch.io/jam/380909/entries.json"}
    ;; {:day 2 :url "https://itch.io/jam/380908/entries.json"}
    ;; {:day 1 :url "https://itch.io/jam/380876/entries.json"}
    ])
@@ -39,19 +39,24 @@
          :links (game-links (game-page (:url game)))))
 
 ;; TODO make one big :nodes and one big :index for all 6 jams
-(defn jam-submissions [link day]
-  (let [res
-        (reduce (fn [acc value]
-                  (let [game (entry->game value day)]
-                    {:nodes (conj! (:nodes acc) game)
-                     :index (assoc! (:index acc) (:url game) (:entry-url game))}))
-                {:nodes (transient [])
-                 :index (transient {})}
-                (-> (crawl link)
-                    :body
-                    (json/parse-string true)
-                    :jam_games))]
-    [(persistent! (:nodes res)) (persistent! (:index res))]))
+(defn jam-submissions []
+  (let [nodes (transient []) index (transient {})]
+    (doseq [{:keys [url day]} jam-links]
+      (doseq [response (-> (crawl url)
+                           :body
+                           (json/parse-string true)
+                           :jam_games)]
+        (let [game (entry->game response day)]
+          (conj! nodes game)
+          (assoc! index (:url game) (:entry-url game)))))
+    [(persistent! nodes) (persistent! index)]))
+
+(defn make-links [nodes index]
+  (let [links (transient [])]
+    (doseq [game nodes]
+      (doseq [link (:links game)]
+        ;; TODO build a link
+        ))))
 
 (defn crawl-data []
   #_"download all entries, while building the index"
@@ -61,6 +66,8 @@
   (crawl "https://blowupthenoobs.itch.io/wouldyouratherday3")
   (game-links (game-page "https://yngvarr.itch.io/pass-the-game-day-3"))
   (def the-subs
-    (let [jam (first jam-links)]
-      (jam-submissions (:url jam) (:day jam))))
+    (jam-submissions))
+  (count (first the-subs))
+  ;; TODO why 8 (eight) ???
+  (count (second the-subs))
   )
