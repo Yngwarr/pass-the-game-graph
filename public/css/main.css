@@ -1,0 +1,12 @@
+@font-face {
+    font-family: IBM;
+    src: url('../font/PxPlus_IBM_CGA.ttf');
+}
+
+html {
+	font-size: 10px;
+}
+
+body {
+	background: #fff;
+}

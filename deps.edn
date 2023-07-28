@@ -1,0 +1,11 @@
+{:paths ["src"]
+ :deps {org.clojure/clojure {:mvn/version "1.11.1"}
+        clj-http/clj-http {:mvn/version "3.12.3"}
+        org.clj-commons/hickory {:mvn/version "0.7.3"}
+        cheshire/cheshire {:mvn/version "5.11.0"}}
+ :aliases
+ {:repl {:extra-deps {cider/cider-nrepl {:mvn/version "LATEST"}
+                      refactor-nrepl/refactor-nrepl {:mvn/version "LATEST"}}
+         :main-opts ["-m" "nrepl.cmdline"
+                     "--middleware"
+                     "[refactor-nrepl.middleware/wrap-refactor,cider.nrepl/cider-middleware]"]}}}
