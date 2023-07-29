@@ -38,18 +38,25 @@
          :entry-url (str "https://itch.io" (:url entry))
          :links (game-links (game-page (:url game)))))
 
-;; TODO make one big :nodes and one big :index for all 6 jams
+(defn extract-entries [nodes index day entries]
+  (reduce (fn [[nodes index] value]
+            (let [game (entry->game value day)]
+              [(conj! nodes game)
+               (assoc! index (:url game) (:entry-url game))]))
+          [nodes index]
+          entries))
+
 (defn jam-submissions []
-  (let [nodes (transient []) index (transient {})]
-    (doseq [{:keys [url day]} jam-links]
-      (doseq [response (-> (crawl url)
-                           :body
-                           (json/parse-string true)
-                           :jam_games)]
-        (let [game (entry->game response day)]
-          (conj! nodes game)
-          (assoc! index (:url game) (:entry-url game)))))
-    [(persistent! nodes) (persistent! index)]))
+  (->> jam-links
+       (reduce (fn [[nodes index] {:keys [url day]}]
+                 (extract-entries
+                   nodes index day
+                   (-> (crawl url)
+                       :body
+                       (json/parse-string true)
+                       :jam_games)))
+               [(transient []) (transient {})])
+       (mapv persistent!)))
 
 (defn make-links [nodes index]
   (let [links (transient [])]
