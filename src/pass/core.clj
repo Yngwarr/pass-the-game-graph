@@ -10,10 +10,12 @@
 
 (def jam-links
   [
+   ;; {:day 6 :url "https://itch.io/jam/380912/entries.json"}
+   ;; {:day 5 :url "https://itch.io/jam/380911/entries.json"}
    {:day 4 :url "https://itch.io/jam/380910/entries.json"}
-   ;; {:day 3 :url "https://itch.io/jam/380909/entries.json"}
-   ;; {:day 2 :url "https://itch.io/jam/380908/entries.json"}
-   ;; {:day 1 :url "https://itch.io/jam/380876/entries.json"}
+   {:day 3 :url "https://itch.io/jam/380909/entries.json"}
+   {:day 2 :url "https://itch.io/jam/380908/entries.json"}
+   {:day 1 :url "https://itch.io/jam/380876/entries.json"}
    ])
 
 (defn game-page [url]
@@ -25,18 +27,29 @@
           html/parse
           html/as-hickory))))
 
-;; TODO I don't like that there're 2 selects and 2 mapvs
-(defn game-links [page]
-  (mapv #(-> % :attrs :href)
-        (flatten (mapv #(s/select (s/tag :a) %)
-                       (s/select (s/child (s/class "formatted_description")) page)))))
+(def href-regex #"https:\/\/.+")
+
+(defn extract-link-address [link-element]
+  (def the-le link-element)
+  (let [text (-> link-element :content first)
+        href (-> link-element :attrs :href)]
+    (if (and (string? text)
+             (re-matches href-regex text))
+      text
+      href)))
+
+(defn extract-links [page]
+  (->> (s/select (s/child (s/class "formatted_description")) page)
+       (mapv #(s/select (s/tag :a) %))
+       flatten
+       (mapv extract-link-address)))
 
 (defn entry->game [{:keys [game] :as entry} day]
   (assoc (select-keys game [:title :url])
          :day day
          :user (get-in game [:user :name])
          :entry-url (str "https://itch.io" (:url entry))
-         :links (game-links (game-page (:url game)))))
+         :links (extract-links (game-page (:url game)))))
 
 (defn extract-entries [nodes index day entries]
   (reduce (fn [[nodes index] value]
@@ -58,23 +71,71 @@
                [(transient []) (transient {})])
        (mapv persistent!)))
 
-(defn make-links [nodes index]
-  (let [links (transient [])]
-    (doseq [game nodes]
-      (doseq [link (:links game)]
-        ;; TODO build a link
-        ))))
+(def jam-link-regex #"https:\/\/itch.io\/jam\/day-\d\/rate\/\d+")
 
-(defn crawl-data []
-  #_"download all entries, while building the index"
-  #_"build links, using entry-urls as keys")
+(defn previous-entry-link [game index]
+  (first
+    (reduce
+      (fn [acc value]
+        (cond
+          (not (string? value))
+          acc
+
+          (and (not= (:entry-url game) value)
+               (re-matches jam-link-regex value))
+          (conj acc value)
+
+          (get index value)
+          (conj acc (get index value))
+
+          :else acc))
+      (sorted-set-by #(compare %2 %1))
+      (:links game))))
 
 (comment
+  (previous-entry-link
+    {:links ["https://theterrificjd.itch.io/bus-chase-city"
+             "https://devcaty.itch.io/rouge-bus"
+             "https://octrs.itch.io/rogue-taxi"]}
+    {"https://theterrificjd.itch.io/bus-chase-city"
+     "https://itch.io/jam/day-3/rate/2190718"
+
+     "https://devcaty.itch.io/rouge-bus"
+     "https://itch.io/jam/day-4/rate/2190718"}))
+
+(defn make-links [nodes index]
+  (persistent!
+    (reduce (fn [acc game]
+              (let [target (previous-entry-link game index)]
+                (if target
+                  (conj!
+                    acc
+                    {:source (:entry-url game)
+                     :target target})
+                  acc)))
+            (transient []) nodes)))
+
+(defn crawl-data []
+  (let [[nodes index] (jam-submissions)]
+    {:nodes nodes
+     :links (make-links nodes index)}))
+
+(defn build-json [data]
+  (json/generate-string data {:pretty true}))
+
+(defn -main [& _args]
+  (->> (crawl-data)
+      build-json
+      (spit "public/data.json")))
+
+(comment
+  (-main)
+
   (crawl "https://blowupthenoobs.itch.io/wouldyouratherday3")
-  (game-links (game-page "https://yngvarr.itch.io/pass-the-game-day-3"))
+  (extract-links (game-page "https://yngvarr.itch.io/pass-the-game-day-3"))
+  (extract-links (game-page "https://shadoweeq.itch.io/rogue-taxi-day4-unity"))
   (def the-subs
     (jam-submissions))
+  (println (build-json the-subs))
   (count (first the-subs))
-  ;; TODO why 8 (eight) ???
-  (count (second the-subs))
-  )
+  (count (second the-subs)))

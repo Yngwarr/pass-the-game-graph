@@ -1,26 +1,15 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
-const data = {
-    nodes: [
-        {["entry-url"]: "1", day: 1},
-        {["entry-url"]: "2", day: 1},
-        {["entry-url"]: "3"},
-        {["entry-url"]: "4"},
-        {["entry-url"]: "5"},
-        {["entry-url"]: "6"},
-        {["entry-url"]: "7"},
-    ],
-    links: [
-        {source: "1", target: "2"},
-        {source: "1", target: "3"},
-        {source: "2", target: "4"},
-    ]
-};
-
 function init() {
+    fetch("/data.json")
+        .then(res => res.json())
+        .then(data => drawDiagram(data));
+}
+
+function drawDiagram(data) {
     // Specify the dimensions of the chart.
-    const width = 928;
-    const height = 680;
+    const width = 900;
+    const height = 900;
 
     // Specify the color scale.
     const color = d3.scaleOrdinal(d3.schemeCategory10);
@@ -32,38 +21,39 @@ function init() {
 
     // Create a simulation with several forces.
     const simulation = d3.forceSimulation(nodes)
-    .force("link", d3.forceLink(links).id(d => d["entry-url"]))
-    .force("charge", d3.forceManyBody())
-    .force("x", d3.forceX())
-    .force("y", d3.forceY());
+        .force("link", d3.forceLink(links).id(d => d["entry-url"]))
+        .force("charge", d3.forceManyBody())
+        .force("x", d3.forceX())
+        .force("y", d3.forceY());
 
     // Create the SVG container.
     const svg = d3.create("svg")
-    .attr("width", width)
-    .attr("height", height)
-    .attr("viewBox", [-width / 2, -height / 2, width, height])
-    .attr("style", "max-width: 100%; height: auto;");
+        .attr("width", width)
+        .attr("height", height)
+        .attr("viewBox", [-width / 2, -height / 2, width, height])
+        .attr("style", "max-width: 100%; height: auto;");
 
     // Add a line for each link, and a circle for each node.
     const link = svg.append("g")
-    .attr("stroke", "#999")
-    .attr("stroke-opacity", 0.6)
-    .selectAll("line")
-    .data(links)
-    .join("line")
-    .attr("stroke-width", d => Math.sqrt(d.value));
+        .attr("stroke", "#999")
+        .attr("stroke-opacity", 0.6)
+        .selectAll("line")
+        .data(links)
+        .join("line")
+        // .attr("stroke-width", d => Math.sqrt(d.value))
+    ;
 
     const node = svg.append("g")
-    .attr("stroke", "#fff")
-    .attr("stroke-width", 1.5)
-    .selectAll("circle")
-    .data(nodes)
-    .join("circle")
-    .attr("r", 5)
-    .attr("fill", d => color(d.day));
+        .attr("stroke", "#fff")
+        .attr("stroke-width", 1.5)
+        .selectAll("circle")
+        .data(nodes)
+        .join("circle")
+        .attr("r", 5)
+        .attr("fill", d => color(d.day));
 
-    node.append("title")
-        .text(d => d.id);
+    node.append("text")
+        .text(d => d.url);
 
     // Add a drag behavior.
     node.call(d3.drag()
