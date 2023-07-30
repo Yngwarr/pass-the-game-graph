@@ -126,7 +126,7 @@
 (defn -main [& _args]
   (->> (crawl-data)
       build-json
-      (spit "public/data.json")))
+      (spit "docs/data.json")))
 
 (comment
   (-main)
