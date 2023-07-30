@@ -20,8 +20,8 @@ function init() {
 
 function drawDiagram(data) {
     // Specify the dimensions of the chart.
-    const width = 900;
-    const height = 900;
+    const width = 1000;
+    const height = 1000;
 
     // Specify the color scale.
     const color = d3.scaleOrdinal(d3.schemeCategory10);
@@ -49,6 +49,7 @@ function drawDiagram(data) {
     const link = svg.append("g")
         .attr("stroke", "#999")
         .attr("stroke-opacity", 0.6)
+        .attr("stroke-width", 2)
         .selectAll("line")
         .data(links)
         .join("line")

@@ -10,8 +10,8 @@
 
 (def jam-links
   [
-   ;; {:day 6 :url "https://itch.io/jam/380912/entries.json"}
-   ;; {:day 5 :url "https://itch.io/jam/380911/entries.json"}
+   {:day 6 :url "https://itch.io/jam/380912/entries.json"}
+   {:day 5 :url "https://itch.io/jam/380911/entries.json"}
    {:day 4 :url "https://itch.io/jam/380910/entries.json"}
    {:day 3 :url "https://itch.io/jam/380909/entries.json"}
    {:day 2 :url "https://itch.io/jam/380908/entries.json"}
@@ -30,7 +30,6 @@
 (def href-regex #"https:\/\/.+")
 
 (defn extract-link-address [link-element]
-  (def the-le link-element)
   (let [text (-> link-element :content first)
         href (-> link-element :attrs :href)]
     (if (and (string? text)
