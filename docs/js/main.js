@@ -13,7 +13,7 @@ function init() {
     info.url = document.getElementById('info-url');
     info.entry = document.getElementById('info-entry');
 
-    fetch('../data.json')
+    fetch('data.json')
         .then(res => res.json())
         .then(data => drawDiagram(data));
 }
