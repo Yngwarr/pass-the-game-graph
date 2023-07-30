@@ -9,7 +9,7 @@
 ;;     218960 -> 2189600
 ;;     218857 -> 2188578
 ;; - add links:
-;;     {
+;; {
 ;;   "source": "https://itch.io/jam/day-1/rate/2187658",
 ;;   "target": "https://itch.io/jam/day-2/rate/2188857"
 ;; }, {
