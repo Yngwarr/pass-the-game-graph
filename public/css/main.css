@@ -10,3 +10,56 @@ html {
 body {
 	background: #fff;
 }
+
+.hidden {
+    display: none;
+}
+
+circle.selected {
+    stroke: #000;
+    stroke-width: 2;
+}
+
+#svg-wrapper {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#info {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+
+    font-size: 1.4rem;
+    font-family: sans;
+    line-height: 1.4;
+
+    border: 1px dotted black;
+    border-radius: 3px;
+    padding: 2rem;
+    max-width: 30rem;
+
+    background: #fff;
+}
+
+#info h1 {
+    font-size: 1.8rem;
+}
+
+#help {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+
+    font-size: 1.8rem;
+    font-family: sans;
+    line-height: 1.2;
+
+    text-align: right;
+    opacity: .5;
+    user-select: none;
+}

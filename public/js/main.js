@@ -1,7 +1,19 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
+let info = {};
+
 function init() {
-    fetch("/data.json")
+    const modal = document.getElementById('info');
+    const drag = new Draggabilly(modal);
+
+    info.window = modal;
+    info.title = document.getElementById('info-title');
+    info.user = document.getElementById('info-user');
+    info.day = document.getElementById('info-day');
+    info.url = document.getElementById('info-url');
+    info.entry = document.getElementById('info-entry');
+
+    fetch('/data.json')
         .then(res => res.json())
         .then(data => drawDiagram(data));
 }
@@ -49,11 +61,24 @@ function drawDiagram(data) {
         .selectAll("circle")
         .data(nodes)
         .join("circle")
+        .on("click", event => {
+            d3.select("circle.selected").classed("selected", false);
+            const target = d3.select(event.target).classed("selected", true);
+            const d = target.datum();
+
+            info.window.classList.remove('hidden');
+            info.title.innerText = d.title;
+            info.user.innerText = d.user;
+            info.day.innerText = d.day;
+            info.url.href = d.url;
+            info.entry.href = d["entry-url"];
+        })
         .attr("r", 5)
         .attr("fill", d => color(d.day));
 
-    node.append("text")
-        .text(d => d.url);
+    // TODO make sure this hack gets removed once I get more familiar with d3
+    // node.append("text")
+    //     .text(d => JSON.stringify([d.title, d.user, d.day, d.url, d.entry]));
 
     // Add a drag behavior.
     node.call(d3.drag()
@@ -100,7 +125,7 @@ function drawDiagram(data) {
     // stop naturally, but it’s a good practice.)
     // invalidation.then(() => simulation.stop());
 
-    document.body.appendChild(svg.node());
+    document.getElementById('svg-wrapper').appendChild(svg.node());
 }
 
 init();
