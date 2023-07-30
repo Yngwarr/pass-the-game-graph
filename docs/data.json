@@ -5895,9 +5895,6 @@
     "source" : "https://itch.io/jam/day-4/rate/2191789",
     "target" : "https://itch.io/jam/day-3/rate/2191506"
   }, {
-    "source" : "https://itch.io/jam/day-4/rate/2192546",
-    "target" : "https://itch.io/jam/day-2/rate/2189029"
-  }, {
     "source" : "https://itch.io/jam/day-4/rate/2192258",
     "target" : "https://itch.io/jam/day-3/rate/2191392"
   }, {
@@ -6099,9 +6096,6 @@
     "source" : "https://itch.io/jam/day-4/rate/2192526",
     "target" : "https://itch.io/jam/day-3/rate/2191453"
   }, {
-    "source" : "https://itch.io/jam/day-4/rate/2192843",
-    "target" : "https://itch.io/jam/day-4/rate/2193261"
-  }, {
     "source" : "https://itch.io/jam/day-4/rate/2192797",
     "target" : "https://itch.io/jam/day-3/rate/2191443"
   }, {
@@ -6155,9 +6149,6 @@
   }, {
     "source" : "https://itch.io/jam/day-3/rate/2191675",
     "target" : "https://itch.io/jam/day-2/rate/2189639"
-  }, {
-    "source" : "https://itch.io/jam/day-3/rate/2191595",
-    "target" : "https://itch.io/jam/day-1/rate/2188629"
   }, {
     "source" : "https://itch.io/jam/day-3/rate/2191639",
     "target" : "https://itch.io/jam/day-2/rate/2189232"
@@ -6464,9 +6455,6 @@
   }, {
     "source" : "https://itch.io/jam/day-2/rate/2189655",
     "target" : "https://itch.io/jam/day-1/rate/2187969"
-  }, {
-    "source" : "https://itch.io/jam/day-2/rate/2189029",
-    "target" : "https://itch.io/jam/day-6/rate/2196573"
   }, {
     "source" : "https://itch.io/jam/day-2/rate/2190061",
     "target" : "https://itch.io/jam/day-1/rate/2187821"
@@ -6972,6 +6960,78 @@
     }, {
       "source": "https://itch.io/jam/day-1/rate/2188275",
       "target": "https://itch.io/jam/day-2/rate/2190253"
+    }, {
+      "source": "https://itch.io/jam/day-5/rate/2193938",
+      "target": "https://itch.io/jam/day-6/rate/2196711"
+    }, {
+      "source": "https://itch.io/jam/day-5/rate/2194284",
+      "target": "https://itch.io/jam/day-6/rate/2196119"
+    }, {
+      "source": "https://itch.io/jam/day-5/rate/2194502",
+      "target": "https://itch.io/jam/day-6/rate/2196706"
+    }, {
+      "source": "https://itch.io/jam/day-5/rate/2194826",
+      "target": "https://itch.io/jam/day-6/rate/2196688"
+    }, {
+      "source": "https://itch.io/jam/day-1/rate/2187616",
+      "target": "https://itch.io/jam/day-2/rate/2189762"
+    }, {
+      "source": "https://itch.io/jam/day-1/rate/2186568",
+      "target": "https://itch.io/jam/day-2/rate/2189153"
+    }, {
+      "source": "https://itch.io/jam/day-1/rate/2188061",
+      "target": "https://itch.io/jam/day-2/rate/2189064"
+    }, {
+      "source": "https://itch.io/jam/day-5/rate/2193674",
+      "target": "https://itch.io/jam/day-6/rate/2196261"
+    }, {
+      "source": "https://itch.io/jam/day-2/rate/2189003",
+      "target": "https://itch.io/jam/day-3/rate/2190952"
+    }, {
+      "source": "https://itch.io/jam/day-5/rate/2193920",
+      "target": "https://itch.io/jam/day-6/rate/2194924"
+    }, {
+      "source": "https://itch.io/jam/day-1/rate/2187814",
+      "target": "https://itch.io/jam/day-2/rate/2189029"
+    }, {
+      "source": "https://itch.io/jam/day-3/rate/2191387",
+      "target": "https://itch.io/jam/day-4/rate/2192546"
+    }, {
+      "source": "https://itch.io/jam/day-3/rate/2191748",
+      "target": "https://itch.io/jam/day-4/rate/2193028"
+    }, {
+      "source": "https://itch.io/jam/day-3/rate/2191084",
+      "target": "https://itch.io/jam/day-4/rate/2192843"
+    }, {
+      "source": "https://itch.io/jam/day-2/rate/2189927",
+      "target": "https://itch.io/jam/day-3/rate/2191409"
+    }, {
+      "source": "https://itch.io/jam/day-5/rate/2193920",
+      "target": "https://itch.io/jam/day-6/rate/2196668"
+    }, {
+      "source": "https://itch.io/jam/day-2/rate/2189701",
+      "target": "https://itch.io/jam/day-3/rate/2191595"
+    }, {
+      "source": "https://itch.io/jam/day-2/rate/2189632",
+      "target": "https://itch.io/jam/day-3/rate/2191607"
+    }, {
+      "source": "https://itch.io/jam/day-3/rate/2191675",
+      "target": "https://itch.io/jam/day-4/rate/2193128"
+    }, {
+      "source": "https://itch.io/jam/day-2/rate/2189846",
+      "target": "https://itch.io/jam/day-3/rate/2191370"
+    }, {
+      "source": "https://itch.io/jam/day-4/rate/2193292",
+      "target": "https://itch.io/jam/day-5/rate/2194764"
+    }, {
+      "source": "https://itch.io/jam/day-3/rate/2191409",
+      "target": "https://itch.io/jam/day-4/rate/2191823"
+    }, {
+      "source": "https://itch.io/jam/day-5/rate/2194826",
+      "target": "https://itch.io/jam/day-6/rate/2195797"
+    }, {
+      "source": "https://itch.io/jam/day-2/rate/2189575",
+      "target": "https://itch.io/jam/day-3/rate/2191647"
     }
   ]
 }
