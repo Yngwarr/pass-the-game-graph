@@ -7035,6 +7035,21 @@
     }, {
       "source": "https://itch.io/jam/day-2/rate/2190244",
       "target": "https://itch.io/jam/day-3/rate/2191572"
+    }, {
+      "source": "https://itch.io/jam/day-3/rate/2191507",
+      "target": "https://itch.io/jam/day-4/rate/2191759"
+    }, {
+      "source": "https://itch.io/jam/day-1/rate/2188476",
+      "target": "https://itch.io/jam/day-2/rate/2190102"
+    }, {
+      "source": "https://itch.io/jam/day-5/rate/2194791",
+      "target": "https://itch.io/jam/day-6/rate/2196185"
+    }, {
+      "source": "https://itch.io/jam/day-4/rate/2192078",
+      "target": "https://itch.io/jam/day-5/rate/2194772"
+    }, {
+      "source": "https://itch.io/jam/day-5/rate/2194812",
+      "target": "https://itch.io/jam/day-6/rate/2196671"
     }
   ]
 }
