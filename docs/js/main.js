@@ -3,6 +3,11 @@ import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 let info = {};
 
 function init() {
+    const params = new URLSearchParams(document.location.search);
+    if (params.get("hide-help") !== null) {
+        document.getElementById("help").style.display = "none";
+    }
+
     const modal = document.getElementById('info');
     const drag = new Draggabilly(modal);
 
