@@ -6,6 +6,13 @@ function init() {
     const modal = document.getElementById('info');
     const drag = new Draggabilly(modal);
 
+    const checkbox = document.getElementById('show-solo');
+    checkbox.addEventListener('click', e => {
+        if (!e.target.checked) {
+            d3.selectAll('circle');
+        }
+    });
+
     info.window = modal;
     info.title = document.getElementById('info-title');
     info.user = document.getElementById('info-user');
@@ -76,10 +83,6 @@ function drawDiagram(data) {
         })
         .attr("r", 5)
         .attr("fill", d => color(d.day));
-
-    // TODO make sure this hack gets removed once I get more familiar with d3
-    // node.append("text")
-    //     .text(d => JSON.stringify([d.title, d.user, d.day, d.url, d.entry]));
 
     // Add a drag behavior.
     node.call(d3.drag()

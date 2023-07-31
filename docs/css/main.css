@@ -29,11 +29,7 @@ circle.selected {
     align-items: center;
 }
 
-#info {
-    position: absolute;
-    left: 10px;
-    top: 10px;
-
+.window {
     font-size: 1.4rem;
     font-family: sans;
     line-height: 1.4;
@@ -44,6 +40,18 @@ circle.selected {
     max-width: 30rem;
 
     background: #fff;
+}
+
+#info {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+
+#ctrl {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
 }
 
 #info h1 {

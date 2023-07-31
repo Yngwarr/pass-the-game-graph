@@ -8,12 +8,16 @@
 		<link href='css/main.css' rel='stylesheet'>
 	</head>
 	<body>
-		<div id="info" class="hidden">
+		<div id="info" class="hidden window">
 			<h1 id="info-title"></h1>
 			<p>by <span id="info-user"></span></p>
 			<p>Day <span id="info-day"></span></p>
 			<br/>
 			<p><a id="info-url" target="_blank" href="#">Game</a> | <a id="info-entry" target="_blank" href="#">Entry</a></p>
+		</div>
+		<div id="ctrl" class="window">
+			<label for="show-solo">Show not continued day 1</label>
+			<input type="checkbox" id="show-solo" name="show-solo" checked />
 		</div>
 		<div id="help">
 			<p>Click the dot to see the entry info.</p>
